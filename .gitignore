@@ -1,0 +1,15 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+build/
+dist/
+
+# Test binaries
+*.test
+.testing-csv.csv
+
+# junk files
+.DS_Store
