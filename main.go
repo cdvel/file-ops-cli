@@ -1,9 +1,9 @@
 package main
 
-import(
-    "github.com/cdvel/fops-cli/cmd"
+import (
+	"github.com/cdvel/fops-cli/cmd"
 )
 
 func main() {
-    cmd.Execute()
+	cmd.Execute()
 }

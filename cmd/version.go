@@ -1,20 +1,19 @@
 package cmd
 
-import(
-    "fmt"
+import (
+	"fmt"
 
-    "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
-
-func init(){
-    rootCmd.AddCommand(versionCmd)
+func init() {
+	rootCmd.AddCommand(versionCmd)
 }
 
 var versionCmd = &cobra.Command{
-        Use: "version",
-        Short: "Show current version",
-        Run: func(cmd *cobra.Command, args []string) {
-                fmt.Println("v0.0.1")
-        },
+	Use:   "version",
+	Short: "Show current version",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("v0.0.1")
+	},
 }

@@ -7,6 +7,8 @@ The File Operations (Fops) CLI, a resilient command line application written in 
 	  - [Commands](#commands)
  	  - [Flags](#flags)
   - [Roadmap](#Roadmap)
+  - [Dependencies](#Dependencies)
+  - [Limitations](#Limitations)
   - [Contributing](#Contributing)
   - [License](#license)
 
@@ -52,14 +54,14 @@ This CLI supports the following commands:
 ## Roadmap
 
 ### basics
-- [ ] barebones cli with command placeholders
-- [ ] read file argument
+- [X] barebones cli with command placeholders
+- [X] read file argument
 - [ ] argument detection (file, algorithm)
 
 ### file verification
-- [ ] non-existent
-- [ ] is a dir
-- [ ] is binary
+- [X] non-existent
+- [X] is a dir
+- [X] is binary
 
 ### linecount
 - [ ] verify file
@@ -67,21 +69,30 @@ This CLI supports the following commands:
 - [ ] count lines in file
 
 ### checksum
+- [ ] verify file: binary ok
 - [ ] read algorithm flag
-- [ ] implement
+- [ ] implement 3 flags
 
 ### version
 - [ ] get from build
 
 ### help
 - [ ] implement
-- [ ] subcommands
+- [X] subcommands
 
 ### CI
-- [] Unit tests
-- [] Build
-- [] Release
+- [ ] Unit tests
+- [ ] Build
+- [ ] Release
 
+## Dependencies
+
+- [mimetype](github.com/gabriel-vasile/mimetype)  v1.2.0
+- [cobra](github.com/spf13/cobra) v0.0.5
+
+## Limitations
+
+- [mimetype](github.com/gabriel-vasile/mimetype) identification is deterministic and dependency free but [non-exhaustive](https://dev.to/sistoi/golang-mime-type-handling-3fnd)
 
 ## Contributing
 
