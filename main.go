@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cdvel/fops-cli/cmd"
+	"fops-cli/cmd"
 )
 
 func main() {
