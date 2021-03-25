@@ -52,7 +52,7 @@ This CLI supports the following commands:
 ## Roadmap
 
 ### basics
-- [ ] barebones cli with command placeholders
+- [X] barebones cli with command placeholders
 - [ ] read file argument
 - [ ] argument detection (file, algorithm)
 
