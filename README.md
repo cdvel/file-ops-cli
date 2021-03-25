@@ -6,6 +6,7 @@ The File Operations (Fops) CLI, a resilient command line application written in 
   - [Usage](#usage)
 	  - [Commands](#commands)
  	  - [Flags](#flags)
+  - [Roadmap](#Roadmap)
   - [Contributing](#Contributing)
   - [License](#license)
 
@@ -23,7 +24,7 @@ go build -o fops
 Once installed, the CLI is used via the following standard format:
 
 ```sh
-fops <command> <flags> <file>
+fops <command> <file> <flags>
 ```
 
 ### Commands
@@ -47,6 +48,39 @@ This CLI supports the following commands:
 | `--md5`  | `NA`      | Use MD5 algorith to checksum a file.                                                                                                        | `checksum --md5`             |
 | `--sha1`  | `NA`      | Use SHA1 algorith to checksum a file.                                                                                                        | `checksum --sha1`             |
 | `--sha256`  | `NA`      | Use SHA256 algorith to checksum a file.                                                                                                        | `checksum --sha26`             |
+
+## Roadmap
+
+### basics
+- [ ] barebones cli with command placeholders
+- [ ] read file argument
+- [ ] argument detection (file, algorithm)
+
+### file verification
+- [ ] non-existent
+- [ ] is a dir
+- [ ] is binary
+
+### linecount
+- [ ] verify file
+- [ ] read file
+- [ ] count lines in file
+
+### checksum
+- [ ] read algorithm flag
+- [ ] implement
+
+### version
+- [ ] get from build
+
+### help
+- [ ] implement
+- [ ] subcommands
+
+### CI
+- [] Unit tests
+- [] Build
+- [] Release
 
 
 ## Contributing
