@@ -18,15 +18,6 @@ func TestMain(m *testing.M) {
 	os.Exit(exitVal)
 }
 
-func init() {
-	_, filename, _, _ := runtime.Caller(0)
-	basepath := path.Join(path.Dir(filename), "..")
-	err := os.Chdir(basepath)
-	if err != nil {
-		panic(err)
-	}
-}
-
 func absPath(filepath string) string {
 	return path.Join(basepath, filepath)
 }
