@@ -1,4 +1,6 @@
-# Fops CLI
+# Fops CLI 
+
+[![CircleCI](https://circleci.com/gh/cdvel/fops-cli.svg?style=svg)](https://circleci.com/gh/cdvel/fops-cli)
 
 The File Operations (Fops) CLI, a resilient command line application written in Golang to count line and checksum files.
 
@@ -82,6 +84,7 @@ This CLI supports the following commands:
 
 ### CI
 - [X] Unit tests
+- [X] Integrate with CircleCI
 - [ ] Build
 - [ ] Release
 
