@@ -12,9 +12,12 @@ type FileStatus struct {
 	Filename string
 }
 
-func (f FileStatus) Validate() FileStatus {
-	file := FileStatus{true, nil, f.Filename}.Exists().IsNotDir().IsNotBinary()
-	return file
+func File(filename string) FileStatus {
+	return FileStatus{true, nil, filename}
+}
+
+func (f FileStatus) CheckFile() FileStatus {
+	return f.Exists().CheckNotDir()
 }
 
 func (f FileStatus) Exists() FileStatus {
@@ -22,16 +25,18 @@ func (f FileStatus) Exists() FileStatus {
 	if f.Err != nil {
 		return f
 	}
+
 	_, err := os.Stat(f.Filename)
 
 	if os.IsNotExist(err) {
+
 		f.Status, f.Err = false, fmt.Errorf("error: No such file '%v'", f.Filename)
 	}
 
 	return f
 }
 
-func (f FileStatus) IsNotDir() FileStatus {
+func (f FileStatus) CheckNotDir() FileStatus {
 
 	if f.Err != nil {
 		return f
@@ -46,7 +51,7 @@ func (f FileStatus) IsNotDir() FileStatus {
 	return f
 }
 
-func (f FileStatus) IsNotBinary() FileStatus {
+func (f FileStatus) CheckNotBinary() FileStatus {
 
 	if f.Err != nil {
 		return f
@@ -54,7 +59,7 @@ func (f FileStatus) IsNotBinary() FileStatus {
 
 	mime, _ := mimetype.DetectFile(f.Filename)
 
-	if mime.Is("application/x-mach-binary") {
+	if mime.Is("application/x-mach-binary") || mime.Is("application/octet-stream") {
 		f.Status, f.Err = false, fmt.Errorf("error: Cannot do linecount for binary file '%v'", f.Filename)
 	}
 

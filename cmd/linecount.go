@@ -29,7 +29,7 @@ var linecountCmd = &cobra.Command{
 	Long:  `Linecount counts the number of lines in a text file. A valid text file is required.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		filename, _ := cmd.Flags().GetString("file")
-		fs := FileStatus{false, nil, filename}.Validate()
+		fs := File(filename).CheckFile().CheckNotBinary()
 
 		if fs.Err != nil {
 			fmt.Println(fs.Err)
