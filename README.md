@@ -69,9 +69,9 @@ This CLI supports the following commands:
 - [X] count lines in file
 
 ### checksum
-- [ ] verify file: binary ok
-- [ ] read algorithm flag
-- [ ] implement 3 flags
+- [X] verify file: binary ok
+- [X] read algorithm flag
+- [X] implement 3 flags
 
 ### version
 - [ ] get from build
@@ -81,7 +81,7 @@ This CLI supports the following commands:
 - [X] subcommands
 
 ### CI
-- [ ] Unit tests
+- [X] Unit tests
 - [ ] Build
 - [ ] Release
 
