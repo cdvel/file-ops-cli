@@ -76,16 +76,16 @@ This CLI supports the following commands:
 - [X] implement 3 flags
 
 ### version
-- [ ] get from build
+- [X] get from build
 
 ### help
-- [ ] implement
+- [X] implement
 - [X] subcommands
 
 ### CI
 - [X] Unit tests
 - [X] Integrate with CircleCI
-- [ ] Build
+- [X] Build
 - [ ] Release
 
 ## Dependencies
