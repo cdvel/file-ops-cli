@@ -1,18 +1,16 @@
 package cmd
 
 import (
-	"crypto/md5"
-	"crypto/sha1"
-	"crypto/sha256"
 	"fmt"
+	. "fops-cli/algorithm"
 	. "fops-cli/filesys"
 	"github.com/spf13/cobra"
-	"hash"
 	"io/ioutil"
 )
 
+var hashFunctions map[string]Algorithm
+
 func init() {
-	fmt.Println(hashAlgorithms)
 
 	checksumCmd.Flags().StringP("file", "f", "", "File to operate on")
 
@@ -22,7 +20,17 @@ func init() {
 
 	checksumCmd.MarkFlagRequired("file")
 
+	hashFunctions = map[string]Algorithm{
+		"md5":    GetMD5(),
+		"sha1":   GetSHA1(),
+		"sha256": GetSHA256(),
+	}
+
 	rootCmd.AddCommand(checksumCmd)
+}
+
+func GetChecksum(value []byte, hashFn string) string {
+	return hashFunctions[hashFn].GetChecksum(value)
 }
 
 var checksumCmd = &cobra.Command{
@@ -41,22 +49,16 @@ A valid text file and an algorithm flag (MD5, SHA1, SHA256) are needed.`,
 		}
 
 		contents, _ := ioutil.ReadFile(filename)
+		algo := ""
 
-		is_md5, _ := cmd.Flags().GetBool("md5")
-		is_sha1, _ := cmd.Flags().GetBool("sha1")
-		is_sha256, _ := cmd.Flags().GetBool("sha256")
-
-		if is_md5 {
-			fmt.Println(fmt.Sprintf("%x", md5.Sum(contents)))
+		for _, algorithm := range hashFunctions {
+			match, _ := cmd.Flags().GetBool(algorithm.GetType())
+			if match {
+				algo = algorithm.GetType()
+			}
 		}
 
-		if is_sha1 {
-			fmt.Println(fmt.Sprintf("%x", sha1.Sum(contents)))
-		}
-
-		if is_sha256 {
-			fmt.Println(fmt.Sprintf("%x", sha256.Sum256(contents)))
-		}
+		fmt.Println(GetChecksum(contents, algo))
 
 	},
 }
