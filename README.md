@@ -64,9 +64,9 @@ This CLI supports the following commands:
 - [X] is binary
 
 ### linecount
-- [ ] verify file
-- [ ] read file
-- [ ] count lines in file
+- [X] verify file
+- [X] read file
+- [X] count lines in file
 
 ### checksum
 - [ ] verify file: binary ok
