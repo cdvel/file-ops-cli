@@ -86,7 +86,7 @@ This CLI supports the following commands:
 - [X] Unit tests
 - [X] Integrate with CircleCI
 - [X] Build
-- [ ] Release
+- [X] Release
 
 ## Dependencies
 
