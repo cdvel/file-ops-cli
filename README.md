@@ -58,7 +58,7 @@ This CLI supports the following commands:
 ### basics
 - [X] barebones cli with command placeholders
 - [X] read file argument
-- [ ] argument detection (file, algorithm)
+- [X] argument detection (file, algorithm)
 
 ### file verification
 - [X] non-existent
