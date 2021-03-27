@@ -1,4 +1,4 @@
-VERSION = "0.4.1"
+VERSION=$(shell git describe --tags 2> /dev/null || echo 0)
 .DEFAULT_GOAL := build
 BIN_FILE=fops
 
