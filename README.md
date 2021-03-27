@@ -19,8 +19,8 @@ The File Operations (Fops) CLI, a resilient command line application written in 
 ```
 git clone https://github.com/cdvel/fops-cli
 cd fops-cli
-go build -o fops
-./fops
+make
+./fops help
 ```
 
 ## Usage
@@ -90,12 +90,12 @@ This CLI supports the following commands:
 
 ## Dependencies
 
-- [mimetype](github.com/gabriel-vasile/mimetype)  v1.2.0
-- [cobra](github.com/spf13/cobra) v0.0.5
+- [mimetype](https://github.com/gabriel-vasile/mimetype)  v1.2.0
+- [cobra](https://github.com/spf13/cobra) v0.0.5
 
 ## Limitations
 
-- [mimetype](github.com/gabriel-vasile/mimetype) identification is deterministic and dependency free but [non-exhaustive](https://dev.to/sistoi/golang-mime-type-handling-3fnd)
+- [mimetype](https://github.com/gabriel-vasile/mimetype) identification is deterministic and dependency free but [non-exhaustive](https://dev.to/sistoi/golang-mime-type-handling-3fnd)
 
 ## Contributing
 
