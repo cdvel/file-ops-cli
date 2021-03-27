@@ -9,7 +9,7 @@ import (
 )
 
 var hashFunctions map[string]Algorithm
-var cmd *cobra.Command
+var checksum *cobra.Command
 
 func init() {
 
@@ -65,8 +65,8 @@ func ChecksumRun(cmd *cobra.Command, args []string) error {
 }
 
 func ChecksumCmd() *cobra.Command {
-	if cmd == nil {
-		cmd = &cobra.Command{
+	if checksum == nil {
+		checksum = &cobra.Command{
 			Use:   "checksum",
 			Short: "Generate checksum of a file",
 			Long: `Checksum retrieves the cryptographic hash of a file.
@@ -74,5 +74,5 @@ func ChecksumCmd() *cobra.Command {
 			RunE: ChecksumRun,
 		}
 	}
-	return cmd
+	return checksum
 }
