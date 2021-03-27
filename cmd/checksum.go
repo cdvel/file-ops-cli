@@ -9,16 +9,17 @@ import (
 )
 
 var hashFunctions map[string]Algorithm
+var cmd *cobra.Command
 
 func init() {
 
-	checksumCmd.Flags().StringP("file", "f", "", "File to operate on")
+	ChecksumCmd().Flags().StringP("file", "f", "", "File to operate on")
 
-	checksumCmd.Flags().Bool("md5", false, "checksum using md5")
-	checksumCmd.Flags().Bool("sha1", false, "checksum using sha1")
-	checksumCmd.Flags().Bool("sha256", false, "checksum using sha256")
+	ChecksumCmd().Flags().Bool("md5", false, "checksum using md5")
+	ChecksumCmd().Flags().Bool("sha1", false, "checksum using sha1")
+	ChecksumCmd().Flags().Bool("sha256", false, "checksum using sha256")
 
-	checksumCmd.MarkFlagRequired("file")
+	ChecksumCmd().MarkFlagRequired("file")
 
 	hashFunctions = map[string]Algorithm{
 		"md5":    GetMD5(),
@@ -26,39 +27,50 @@ func init() {
 		"sha256": GetSHA256(),
 	}
 
-	rootCmd.AddCommand(checksumCmd)
+	rootCmd.AddCommand(ChecksumCmd())
 }
 
 func GetChecksum(value []byte, hashFn string) string {
 	return hashFunctions[hashFn].GetChecksum(value)
 }
 
-var checksumCmd = &cobra.Command{
-	Use:   "checksum",
-	Short: "Generate checksum of a file",
-	Long: `Checksum retrieves the cryptographic hash of a file.
-A valid text file and an algorithm flag (MD5, SHA1, SHA256) are needed.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		filename, _ := cmd.Flags().GetString("file")
+func ChecksumRun(cmd *cobra.Command, args []string) error {
 
-		fs := File(filename).CheckFile()
+	filename, _ := cmd.Flags().GetString("file")
 
-		if fs.Err != nil {
-			fmt.Println(fs.Err)
-			return
+	fs := File(filename).CheckFile()
+
+	if fs.Err != nil {
+		fmt.Println("where is the file", fs.Err)
+		return fs.Err
+	}
+
+	contents, _ := ioutil.ReadFile(filename)
+	algo := ""
+
+	for _, algorithm := range hashFunctions {
+		match, err := cmd.Flags().GetBool(algorithm.GetType())
+		if err != nil {
+			return err
 		}
-
-		contents, _ := ioutil.ReadFile(filename)
-		algo := ""
-
-		for _, algorithm := range hashFunctions {
-			match, _ := cmd.Flags().GetBool(algorithm.GetType())
-			if match {
-				algo = algorithm.GetType()
-			}
+		if match {
+			algo = algorithm.GetType()
 		}
+	}
 
-		fmt.Println(GetChecksum(contents, algo))
+	fmt.Println(GetChecksum(contents, algo))
+	return nil
+}
 
-	},
+func ChecksumCmd() *cobra.Command {
+	if cmd == nil {
+		cmd = &cobra.Command{
+			Use:   "checksum",
+			Short: "Generate checksum of a file",
+			Long: `Checksum retrieves the cryptographic hash of a file.
+		A valid text file and an algorithm flag (MD5, SHA1, SHA256) are needed.`,
+			RunE: ChecksumRun,
+		}
+	}
+	return cmd
 }
