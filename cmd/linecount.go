@@ -8,10 +8,12 @@ import (
 	"strings"
 )
 
+var linecount *cobra.Command
+
 func init() {
-	linecountCmd.Flags().StringP("file", "f", "", "File to operate on")
-	linecountCmd.MarkFlagRequired("file")
-	rootCmd.AddCommand(linecountCmd)
+	LinecountCmd().Flags().StringP("file", "f", "", "File to operate on")
+	LinecountCmd().MarkFlagRequired("file")
+	rootCmd.AddCommand(LinecountCmd())
 }
 
 func count(filename string) (int, error) {
@@ -23,23 +25,32 @@ func count(filename string) (int, error) {
 	return strings.Count(string(lines), "\n"), err
 }
 
-var linecountCmd = &cobra.Command{
-	Use:   "linecount",
-	Short: "Count lines in a file",
-	Long:  `Linecount counts the number of lines in a text file. A valid text file is required.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		filename, _ := cmd.Flags().GetString("file")
-		fs := File(filename).CheckFile().CheckNotBinary()
+func LinecountRun(cmd *cobra.Command, args []string) error {
+	filename, _ := cmd.Flags().GetString("file")
+	fs := File(filename).CheckFile().CheckNotBinary()
 
-		if fs.Err != nil {
-			fmt.Println(fs.Err)
+	if fs.Err != nil {
+		fmt.Println(fs.Err)
+	} else {
+		lines, err := count(fs.Filename)
+		if err != nil {
+			fmt.Println(err)
+			return err
 		} else {
-			lines, err := count(fs.Filename)
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println(lines)
-			}
+			fmt.Println(lines)
 		}
-	},
+	}
+	return nil
+}
+
+func LinecountCmd() *cobra.Command {
+	if linecount == nil {
+		linecount = &cobra.Command{
+			Use:   "linecount",
+			Short: "Count lines in a file",
+			Long:  `Linecount counts the number of lines in a text file. A valid text file is required.`,
+			RunE:  LinecountRun,
+		}
+	}
+	return linecount
 }

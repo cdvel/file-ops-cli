@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"os"
 	"path"
 	"runtime"
@@ -35,5 +37,17 @@ func TestCount(t *testing.T) {
 	for _, testcase := range cases {
 		linecount, _ := count(testcase.filepath)
 		assert.Equal(t, linecount, testcase.expects, fmt.Sprintf("Failed test with %v", testcase.filepath))
+	}
+}
+
+func TestLinecountRun(t *testing.T) {
+	cmd := LinecountCmd()
+	b := bytes.NewBufferString("")
+	cmd.SetOut(b)
+	cmd.SetArgs([]string{"--file", absPath("assets/myfile.txt")})
+	cmd.Execute()
+	_, err := ioutil.ReadAll(b)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
