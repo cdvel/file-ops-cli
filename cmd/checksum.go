@@ -41,24 +41,26 @@ func ChecksumRun(cmd *cobra.Command, args []string) error {
 	fs := File(filename).CheckFile()
 
 	if fs.Err != nil {
-		fmt.Println("where is the file", fs.Err)
+		fmt.Println(fs.Err)
 		return fs.Err
+	} else {
+
+		algorithmFlag := ""
+		contents, _ := ioutil.ReadFile(filename)
+
+		for _, algorithm := range hashFunctions {
+			match, err := cmd.Flags().GetBool(algorithm.GetType())
+			if err != nil {
+				return err
+			}
+			if match {
+				algorithmFlag = algorithm.GetType()
+			}
+		}
+
+		fmt.Println(GetChecksum(contents, algorithmFlag))
 	}
 
-	contents, _ := ioutil.ReadFile(filename)
-	algo := ""
-
-	for _, algorithm := range hashFunctions {
-		match, err := cmd.Flags().GetBool(algorithm.GetType())
-		if err != nil {
-			return err
-		}
-		if match {
-			algo = algorithm.GetType()
-		}
-	}
-
-	fmt.Println(GetChecksum(contents, algo))
 	return nil
 }
 
