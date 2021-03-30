@@ -37,11 +37,9 @@ func GetChecksum(value []byte, hashFn string) string {
 func ChecksumRun(cmd *cobra.Command, args []string) error {
 
 	filename, _ := cmd.Flags().GetString("file")
-
 	fs := File(filename).CheckFile()
 
 	if fs.Err != nil {
-		fmt.Println(fs.Err)
 		return fs.Err
 	} else {
 
@@ -56,6 +54,10 @@ func ChecksumRun(cmd *cobra.Command, args []string) error {
 			if match {
 				algorithmFlag = algorithm.GetType()
 			}
+		}
+
+		if algorithmFlag == "" {
+			return fmt.Errorf("Checksum flag is missing. One of md5, sha1, sha256 is required.")
 		}
 
 		fmt.Println(GetChecksum(contents, algorithmFlag))
