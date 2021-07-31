@@ -1,4 +1,4 @@
-# Fops CLI 
+# File Ops CLI 
 
 [![CircleCI](https://img.shields.io/circleci/build/github/cdvel/file-ops-cli/main?logo=circleci&style=flat-square&token=7c35257d742623bed23bb4d07b4032aa6c38ad25)](https://circleci.com/gh/cdvel/file-ops-cli)
 
